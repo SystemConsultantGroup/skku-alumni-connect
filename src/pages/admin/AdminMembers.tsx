@@ -24,39 +24,16 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Search, Download, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
+import { Search, Download, ChevronLeft, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
+import { allMembers, type AdminMember } from "@/data/adminMembers";
+import {
+  selectAsisStore,
+  setAsisStatus,
+  useAsisStore,
+  type AsisStatus,
+} from "@/data/asisSync";
 
-interface AdminMember {
-  id: number;
-  name: string;
-  department: string;
-  year: number;
-  position: string;
-  generation: string;
-  phone: string;
-  paymentStatus: "완료" | "미납";
-  accountStatus: "활성" | "비활성" | "미가입";
-}
-
-const generateMembers = (): AdminMember[] => {
-  const depts = ["경영학과", "법학과", "컴퓨터공학과", "건축학과", "경제학과", "행정학과", "의학과", "IMBA"];
-  const positions = ["회장", "부회장", "감사", "자문위원", "상임이사", "이사", "고문"];
-  const names = ["김민수", "이영희", "박철수", "최지연", "정대호", "강수진", "한명석", "윤서연", "오태진", "송미라", "조창식", "김영수", "이정민", "박서연", "최동우", "정미영", "한상철", "윤하린", "강태준", "송미래"];
-  return names.map((name, i) => ({
-    id: i + 1,
-    name,
-    department: depts[i % depts.length],
-    year: 1978 + (i * 2) % 30,
-    position: positions[i % positions.length],
-    generation: i < 16 ? "제40대" : "제41대",
-    phone: `010-${String(1000 + i).slice(-4)}-${String(5000 + i * 3).slice(-4)}`,
-    paymentStatus: i % 3 === 2 ? "미납" : "완료",
-    accountStatus: i % 5 === 4 ? "비활성" : i % 7 === 6 ? "미가입" : "활성",
-  }));
-};
-
-const allMembers = generateMembers();
 const PAGE_SIZE = 10;
 
 const AdminMembers = () => {
@@ -69,6 +46,9 @@ const AdminMembers = () => {
   const [editPosition, setEditPosition] = useState("");
   const [editGeneration, setEditGeneration] = useState("");
   const [editPayment, setEditPayment] = useState("");
+  const [editAsis, setEditAsis] = useState<AsisStatus>("synced");
+
+  const asisRecords = useAsisStore(selectAsisStore);
 
   const filtered = allMembers.filter((m) => {
     if (search && !m.name.includes(search) && !m.department.includes(search) && !String(m.year).includes(search)) return false;
@@ -86,6 +66,17 @@ const AdminMembers = () => {
     setEditPosition(m.position);
     setEditGeneration(m.generation);
     setEditPayment(m.paymentStatus);
+    setEditAsis(asisRecords[m.id]?.status ?? "synced");
+  };
+
+  const handleSave = () => {
+    if (!selectedMember) return;
+    const prevAsis = asisRecords[selectedMember.id]?.status ?? "synced";
+    if (prevAsis !== editAsis) {
+      setAsisStatus(selectedMember.id, editAsis);
+    }
+    toast.success("변경사항이 저장되었습니다 (mock)");
+    setSelectedMember(null);
   };
 
   return (
@@ -147,37 +138,49 @@ const AdminMembers = () => {
                 <TableHead>연락처</TableHead>
                 <TableHead>납부 상태</TableHead>
                 <TableHead>가입 상태</TableHead>
+                <TableHead>ASIS 상태</TableHead>
                 <TableHead></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {paged.map((m) => (
-                <TableRow key={m.id}>
-                  <TableCell className="font-medium">{m.name}</TableCell>
-                  <TableCell>{m.department}</TableCell>
-                  <TableCell>{m.year}</TableCell>
-                  <TableCell>{m.position}</TableCell>
-                  <TableCell>{m.generation}</TableCell>
-                  <TableCell>{m.phone}</TableCell>
-                  <TableCell>
-                    <Badge className={m.paymentStatus === "완료" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}>
-                      {m.paymentStatus}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant="outline" className={
-                      m.accountStatus === "활성" ? "text-green-600 border-green-300" :
-                      m.accountStatus === "비활성" ? "text-red-600 border-red-300" :
-                      "text-muted-foreground"
-                    }>
-                      {m.accountStatus}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <Button variant="ghost" size="sm" onClick={() => openDetail(m)}>관리</Button>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {paged.map((m) => {
+                const asisStatus = asisRecords[m.id]?.status ?? "synced";
+                return (
+                  <TableRow key={m.id}>
+                    <TableCell className="font-medium">{m.name}</TableCell>
+                    <TableCell>{m.department}</TableCell>
+                    <TableCell>{m.year}</TableCell>
+                    <TableCell>{m.position}</TableCell>
+                    <TableCell>{m.generation}</TableCell>
+                    <TableCell>{m.phone}</TableCell>
+                    <TableCell>
+                      <Badge className={m.paymentStatus === "완료" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}>
+                        {m.paymentStatus}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant="outline" className={
+                        m.accountStatus === "활성" ? "text-green-600 border-green-300" :
+                        m.accountStatus === "비활성" ? "text-red-600 border-red-300" :
+                        "text-muted-foreground"
+                      }>
+                        {m.accountStatus}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Badge className={asisStatus === "synced"
+                        ? "bg-green-100 text-green-700 border-green-300"
+                        : "bg-red-100 text-red-700 border-red-300"
+                      }>
+                        {asisStatus === "synced" ? "최신" : "미반영"}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Button variant="ghost" size="sm" onClick={() => openDetail(m)}>관리</Button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </CardContent>
@@ -240,6 +243,16 @@ const AdminMembers = () => {
                     </SelectContent>
                   </Select>
                 </div>
+                <div>
+                  <label className="text-sm font-medium mb-1 block">ASIS 상태</label>
+                  <Select value={editAsis} onValueChange={(v) => setEditAsis(v as AsisStatus)}>
+                    <SelectTrigger><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="synced">최신</SelectItem>
+                      <SelectItem value="pending">미반영</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
             </div>
           )}
@@ -249,7 +262,7 @@ const AdminMembers = () => {
             </Button>
             <div className="flex gap-2">
               <Button variant="outline" onClick={() => setSelectedMember(null)}>취소</Button>
-              <Button onClick={() => { toast.success("변경사항이 저장되었습니다 (mock)"); setSelectedMember(null); }}>저장</Button>
+              <Button onClick={handleSave}>저장</Button>
             </div>
           </DialogFooter>
         </DialogContent>

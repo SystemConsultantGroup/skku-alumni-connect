@@ -9,12 +9,15 @@ import {
   MessageSquare,
   Flag,
   LogOut,
+  RefreshCw,
 } from "lucide-react";
 import { selectPendingReportCount, useReportStore } from "@/data/reports";
+import { selectPendingAsisCount, useAsisStore } from "@/data/asisSync";
 
 const menuItems = [
   { label: "대시보드", icon: LayoutDashboard, path: "/admin" },
   { label: "회원 관리", icon: Users, path: "/admin/members" },
+  { label: "ASIS 최신화 관리", icon: RefreshCw, path: "/admin/asis-sync" },
   { label: "엑셀 업로드", icon: Upload, path: "/admin/upload" },
   { label: "신규 신청 관리", icon: FileText, path: "/admin/applications" },
   { label: "기여금 관리", icon: CreditCard, path: "/admin/payments" },
@@ -27,10 +30,17 @@ const AdminLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const pendingReports = useReportStore(selectPendingReportCount);
+  const pendingAsis = useAsisStore(selectPendingAsisCount);
 
   const isActive = (path: string) => {
     if (path === "/admin") return location.pathname === "/admin";
     return location.pathname.startsWith(path);
+  };
+
+  const badgeCountFor = (path: string): number => {
+    if (path === "/admin/reports") return pendingReports;
+    if (path === "/admin/asis-sync") return pendingAsis;
+    return 0;
   };
 
   return (
@@ -44,7 +54,7 @@ const AdminLayout = () => {
 
         <nav className="flex-1 p-2 space-y-0.5 overflow-y-auto">
           {menuItems.map((item) => {
-            const showBadge = item.path === "/admin/reports" && pendingReports > 0;
+            const badgeCount = badgeCountFor(item.path);
             return (
               <button
                 key={item.path}
@@ -57,9 +67,9 @@ const AdminLayout = () => {
               >
                 <item.icon className="w-4 h-4 shrink-0" />
                 <span className="flex-1 text-left">{item.label}</span>
-                {showBadge && (
+                {badgeCount > 0 && (
                   <span className="bg-destructive text-destructive-foreground text-[10px] font-semibold rounded-full px-1.5 min-w-[18px] text-center leading-[18px]">
-                    {pendingReports}
+                    {badgeCount}
                   </span>
                 )}
               </button>

@@ -1,5 +1,5 @@
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { Home, Users, Newspaper, MessageSquare, User, LogOut, Settings, ChevronDown, UserX } from "lucide-react";
+import { Home, Users, Newspaper, MessageSquare, Briefcase, User, LogOut, Settings, ChevronDown, UserX } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,6 +14,7 @@ const tabs = [
   { id: "members", label: "임원정보", icon: Users, path: "/main/members" },
   { id: "news", label: "공지/뉴스", icon: Newspaper, path: "/main/news" },
   { id: "community", label: "커뮤니티", icon: MessageSquare, path: "/main/community" },
+  { id: "business", label: "비즈니스", icon: Briefcase, path: "/main/business" },
 ];
 
 const MainLayout = () => {

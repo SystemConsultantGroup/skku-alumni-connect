@@ -201,8 +201,8 @@ function getRecentCommunityPosts() {
     });
   });
   allPosts.push(
-    { source: "협업 제안", title: "IT 시스템 구축 파트너 구합니다", date: "2026.03.22", link: "/main/community" },
-    { source: "협업 제안", title: "강남 상업용 부동산 공동투자 제안", date: "2026.03.18", link: "/main/community" },
+    { source: "협업 제안", title: "IT 시스템 구축 파트너 구합니다", date: "2026.03.22", link: "/main/business" },
+    { source: "협업 제안", title: "강남 상업용 부동산 공동투자 제안", date: "2026.03.18", link: "/main/business" },
   );
   return allPosts.sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
 }

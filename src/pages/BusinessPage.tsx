@@ -1,7 +1,6 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -68,6 +67,7 @@ const INDUSTRIES = [
 
 interface CollabPost {
   id: string;
+  industry: string;
   title: string;
   preview: string;
   body: string;
@@ -77,13 +77,14 @@ interface CollabPost {
 }
 
 const INITIAL_COLLAB_POSTS: CollabPost[] = [
-  { id: "b1", title: "IT 시스템 구축 파트너 구합니다", preview: "중소기업 대상 ERP 시스템 구축 프로젝트를 진행 중입니다. 관심 있는 동문...", body: "중소기업 대상 ERP 시스템 구축 프로젝트를 진행 중입니다.\n\n현재 3개 기업과 계약이 완료된 상태이며, 프론트엔드 및 백엔드 개발 역량을 갖춘 파트너사를 찾고 있습니다.\n\n관심 있는 동문 기업은 연락 부탁드립니다.\n\n연락처: yoon@nextsoft.io", author: "윤하린", date: "2026.03.22", hasThumbnail: false },
-  { id: "b2", title: "강남 상업용 부동산 공동투자 제안", preview: "강남역 인근 상업용 부동산 공동투자 기회가 있어 동문 여러분께...", body: "강남역 인근 상업용 부동산 공동투자 기회가 있어 동문 여러분께 제안드립니다.\n\n위치: 강남역 도보 5분\n규모: 지상 6층 근린생활시설\n예상 수익률: 연 5~7%\n\n최소 투자금액: 1억원\n모집 인원: 5~10명\n\n관심 있으신 분은 개별 연락 부탁드립니다.", author: "박서연", date: "2026.03.18", hasThumbnail: true },
-  { id: "b3", title: "마케팅 컨설팅 상호 협력 제안", preview: "마케팅연구회 활동을 기반으로 동문 기업 대상 마케팅 컨설팅...", body: "마케팅연구회 활동을 기반으로 동문 기업 대상 마케팅 컨설팅 서비스를 제공하고자 합니다.\n\n주요 서비스:\n- 브랜드 전략 수립\n- 디지털 마케팅 기획\n- SNS 마케팅 운영 대행\n\n동문 기업 특별 할인 적용됩니다.\n문의: kim@sktech.co.kr", author: "김영수", date: "2026.03.14", hasThumbnail: false },
-  { id: "b4", title: "의료기기 유통 사업 파트너십", preview: "의료기기 해외 유통 관련 사업 파트너를 찾고 있습니다...", body: "의료기기 해외 유통 관련 사업 파트너를 찾고 있습니다.\n\n당사는 국내 의료기기 제조사와 해외 바이어를 연결하는 유통 사업을 진행 중입니다.\n\n필요 역량:\n- 해외 영업 네트워크 보유\n- 의료기기 인허가 경험\n- 물류/통관 전문 지식\n\n관심 있는 동문은 연락 바랍니다.\nhan@skkhospital.co.kr", author: "한상철", date: "2026.03.10", hasThumbnail: true },
+  { id: "b1", industry: "전기/정보통신", title: "IT 시스템 구축 파트너 구합니다", preview: "중소기업 대상 ERP 시스템 구축 프로젝트를 진행 중입니다. 관심 있는 동문...", body: "중소기업 대상 ERP 시스템 구축 프로젝트를 진행 중입니다.\n\n현재 3개 기업과 계약이 완료된 상태이며, 프론트엔드 및 백엔드 개발 역량을 갖춘 파트너사를 찾고 있습니다.\n\n관심 있는 동문 기업은 연락 부탁드립니다.\n\n연락처: yoon@nextsoft.io", author: "윤하린", date: "2026.03.22", hasThumbnail: false },
+  { id: "b2", industry: "건설/건축/부동산업", title: "강남 상업용 부동산 공동투자 제안", preview: "강남역 인근 상업용 부동산 공동투자 기회가 있어 동문 여러분께...", body: "강남역 인근 상업용 부동산 공동투자 기회가 있어 동문 여러분께 제안드립니다.\n\n위치: 강남역 도보 5분\n규모: 지상 6층 근린생활시설\n예상 수익률: 연 5~7%\n\n최소 투자금액: 1억원\n모집 인원: 5~10명\n\n관심 있으신 분은 개별 연락 부탁드립니다.", author: "박서연", date: "2026.03.18", hasThumbnail: true },
+  { id: "b3", industry: "공무원/회사원/협회/단체", title: "마케팅 컨설팅 상호 협력 제안", preview: "마케팅연구회 활동을 기반으로 동문 기업 대상 마케팅 컨설팅...", body: "마케팅연구회 활동을 기반으로 동문 기업 대상 마케팅 컨설팅 서비스를 제공하고자 합니다.\n\n주요 서비스:\n- 브랜드 전략 수립\n- 디지털 마케팅 기획\n- SNS 마케팅 운영 대행\n\n동문 기업 특별 할인 적용됩니다.\n문의: kim@sktech.co.kr", author: "김영수", date: "2026.03.14", hasThumbnail: false },
+  { id: "b4", industry: "예술/스포츠/보건/의료업", title: "의료기기 유통 사업 파트너십", preview: "의료기기 해외 유통 관련 사업 파트너를 찾고 있습니다...", body: "의료기기 해외 유통 관련 사업 파트너를 찾고 있습니다.\n\n당사는 국내 의료기기 제조사와 해외 바이어를 연결하는 유통 사업을 진행 중입니다.\n\n필요 역량:\n- 해외 영업 네트워크 보유\n- 의료기기 인허가 경험\n- 물류/통관 전문 지식\n\n관심 있는 동문은 연락 바랍니다.\nhan@skkhospital.co.kr", author: "한상철", date: "2026.03.10", hasThumbnail: true },
 ];
 
 type IndustryFilterKey = "generation" | "position" | "department" | "region";
+type SubTab = "collab" | "members";
 
 const INDUSTRY_FILTER_LABELS: Record<IndustryFilterKey, string> = {
   generation: "기수",
@@ -158,14 +159,11 @@ const CollabPostRow = ({
 
 const BusinessPage = () => {
   const navigate = useNavigate();
-  const [tab, setTab] = useState<"industry" | "collab">("industry");
   const [selectedIndustry, setSelectedIndustry] = useState<string | null>(null);
+  const [subTab, setSubTab] = useState<SubTab>("collab");
   const [collabPosts, setCollabPosts] = useState<CollabPost[]>(INITIAL_COLLAB_POSTS);
   const [selectedPost, setSelectedPost] = useState<CollabPost | null>(null);
   const deleted = useReportStore(selectDeleted);
-  const visiblePosts = collabPosts.filter(
-    (p) => !deleted.some((d) => d.targetKind === "businessPost" && d.targetId === p.id),
-  );
   const [showWriteDialog, setShowWriteDialog] = useState(false);
   const [newTitle, setNewTitle] = useState("");
   const [newContent, setNewContent] = useState("");
@@ -208,6 +206,27 @@ const BusinessPage = () => {
     return value;
   };
 
+  const enterIndustry = (name: string) => {
+    setSelectedIndustry(name);
+    setSubTab("collab");
+    clearIndFilters();
+  };
+
+  const exitIndustry = () => {
+    setSelectedIndustry(null);
+    setSelectedPost(null);
+    clearIndFilters();
+  };
+
+  const industryPosts = useMemo(() => {
+    if (!selectedIndustry) return [];
+    return collabPosts.filter(
+      (p) =>
+        p.industry === selectedIndustry &&
+        !deleted.some((d) => d.targetKind === "businessPost" && d.targetId === p.id),
+    );
+  }, [collabPosts, deleted, selectedIndustry]);
+
   const industryMembers = useMemo(() => {
     if (!selectedIndustry) return [];
     let result = MEMBERS.filter((m) => {
@@ -229,8 +248,10 @@ const BusinessPage = () => {
       toast.error("제목과 내용을 모두 입력해주세요");
       return;
     }
+    if (!selectedIndustry) return;
     const newPost: CollabPost = {
       id: `new-${Date.now()}`,
+      industry: selectedIndustry,
       title: newTitle,
       preview: newContent.slice(0, 50) + "...",
       body: newContent,
@@ -247,9 +268,9 @@ const BusinessPage = () => {
 
   // Post detail view
   if (selectedPost) {
-    const currentIdx = visiblePosts.findIndex((p) => p.id === selectedPost.id);
-    const prevPost = currentIdx >= 0 && currentIdx < visiblePosts.length - 1 ? visiblePosts[currentIdx + 1] : null;
-    const nextPost = currentIdx > 0 ? visiblePosts[currentIdx - 1] : null;
+    const currentIdx = industryPosts.findIndex((p) => p.id === selectedPost.id);
+    const prevPost = currentIdx >= 0 && currentIdx < industryPosts.length - 1 ? industryPosts[currentIdx + 1] : null;
+    const nextPost = currentIdx > 0 ? industryPosts[currentIdx - 1] : null;
     const detailAuthorId = resolveAuthorId(selectedPost.author);
 
     return (
@@ -318,48 +339,76 @@ const BusinessPage = () => {
     );
   }
 
-  return (
-    <div className="max-w-5xl mx-auto px-4 py-6 space-y-4">
-      <Tabs value={tab} onValueChange={(v) => { setTab(v as "industry" | "collab"); setSelectedIndustry(null); }}>
-        <TabsList className="w-full">
-          <TabsTrigger value="industry" className="flex-1">업종별 회원보기</TabsTrigger>
-          <TabsTrigger value="collab" className="flex-1">협업 제안하기</TabsTrigger>
-        </TabsList>
-      </Tabs>
-
-      {/* Industry tab */}
-      {tab === "industry" && !selectedIndustry && (
+  // Industry list (entry)
+  if (!selectedIndustry) {
+    return (
+      <div className="max-w-5xl mx-auto px-4 py-6 space-y-4">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
           {INDUSTRIES.map(({ name, icon: Icon }) => {
-            const count = MEMBERS.filter((m) => m.industry === name).length;
+            const memberCount = MEMBERS.filter((m) => m.industry === name).length;
             return (
               <button
                 key={name}
-                onClick={() => setSelectedIndustry(name)}
+                onClick={() => enterIndustry(name)}
                 className="bg-card border border-border rounded-xl p-4 hover:shadow-md hover:border-primary/30 transition-all text-center"
               >
                 <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mx-auto mb-2">
                   <Icon className="w-5 h-5 text-primary" />
                 </div>
                 <p className="text-sm font-medium text-foreground leading-tight">{name}</p>
-                <p className="text-xs text-muted-foreground mt-1">{count}명</p>
+                <p className="text-xs text-muted-foreground mt-1">{memberCount}명</p>
               </button>
             );
           })}
         </div>
+      </div>
+    );
+  }
+
+  // Industry detail with sub-tabs
+  return (
+    <div className="max-w-5xl mx-auto px-4 py-6 space-y-4">
+      <button
+        onClick={exitIndustry}
+        className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        업종 목록
+      </button>
+      <h2 className="text-lg font-semibold text-foreground">{selectedIndustry}</h2>
+
+      <Tabs value={subTab} onValueChange={(v) => setSubTab(v as SubTab)}>
+        <TabsList className="w-full">
+          <TabsTrigger value="collab" className="flex-1">협업 제안하기</TabsTrigger>
+          <TabsTrigger value="members" className="flex-1">업종별 회원보기</TabsTrigger>
+        </TabsList>
+      </Tabs>
+
+      {/* Collab sub-tab */}
+      {subTab === "collab" && (
+        <div className="space-y-3 relative">
+          {industryPosts.length === 0 ? (
+            <p className="text-center text-muted-foreground py-12">
+              아직 등록된 협업 제안이 없습니다
+            </p>
+          ) : (
+            industryPosts.map((post) => (
+              <CollabPostRow key={post.id} post={post} onSelect={() => setSelectedPost(post)} />
+            ))
+          )}
+
+          <button
+            onClick={() => setShowWriteDialog(true)}
+            className="fixed bottom-24 md:bottom-8 right-4 md:right-8 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg flex items-center justify-center hover:bg-primary/90 transition-colors z-20"
+          >
+            <Plus className="w-6 h-6" />
+          </button>
+        </div>
       )}
 
-      {tab === "industry" && selectedIndustry && (
+      {/* Members sub-tab */}
+      {subTab === "members" && (
         <div className="space-y-4">
-          <button
-            onClick={() => { setSelectedIndustry(null); clearIndFilters(); }}
-            className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            업종 목록
-          </button>
-          <h2 className="text-lg font-semibold text-foreground">{selectedIndustry}</h2>
-
           {/* Search */}
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -469,22 +518,6 @@ const BusinessPage = () => {
         </div>
       )}
 
-      {/* Collab tab */}
-      {tab === "collab" && (
-        <div className="space-y-3 relative">
-          {visiblePosts.map((post) => (
-            <CollabPostRow key={post.id} post={post} onSelect={() => setSelectedPost(post)} />
-          ))}
-
-          <button
-            onClick={() => setShowWriteDialog(true)}
-            className="fixed bottom-24 md:bottom-8 right-4 md:right-8 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg flex items-center justify-center hover:bg-primary/90 transition-colors z-20"
-          >
-            <Plus className="w-6 h-6" />
-          </button>
-        </div>
-      )}
-
       {/* Write dialog */}
       <Dialog open={showWriteDialog} onOpenChange={setShowWriteDialog}>
         <DialogContent className="sm:max-w-md">
@@ -492,6 +525,9 @@ const BusinessPage = () => {
             <DialogTitle>협업 제안 글쓰기</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
+            <div className="text-xs text-muted-foreground">
+              업종: <span className="text-foreground font-medium">{selectedIndustry}</span>
+            </div>
             <div>
               <label className="text-sm font-medium text-foreground mb-1 block">제목 *</label>
               <Input placeholder="제목을 입력하세요" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} />

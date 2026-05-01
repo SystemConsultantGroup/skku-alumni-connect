@@ -24,11 +24,13 @@ import MyPage from "./pages/MyPage";
 import IDCardPage from "./pages/IDCardPage";
 import BenefitsPage from "./pages/BenefitsPage";
 import SettingsPage from "./pages/SettingsPage";
+import NotificationSettingsPage from "./pages/NotificationSettingsPage";
 import PlaceholderTab from "./pages/PlaceholderTab";
 import AdminLayout from "./components/AdminLayout";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminMembers from "./pages/admin/AdminMembers";
+import AdminAsisSync from "./pages/admin/AdminAsisSync";
 import AdminUpload from "./pages/admin/AdminUpload";
 import AdminPlaceholder from "./pages/admin/AdminPlaceholder";
 import AdminApplications from "./pages/admin/AdminApplications";
@@ -73,6 +75,7 @@ const App = () => (
             <Route path="id-card" element={<IDCardPage />} />
             <Route path="benefits" element={<BenefitsPage />} />
             <Route path="settings" element={<SettingsPage />} />
+            <Route path="notification-settings" element={<NotificationSettingsPage />} />
             <Route path="blocked" element={<BlockedUsersPage />} />
             <Route path="licenses" element={<OpenSourceLicensePage />} />
           </Route>
@@ -80,6 +83,7 @@ const App = () => (
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
             <Route path="members" element={<AdminMembers />} />
+            <Route path="asis-sync" element={<AdminAsisSync />} />
             <Route path="upload" element={<AdminUpload />} />
             <Route path="applications" element={<AdminApplications />} />
             <Route path="payments" element={<AdminPayments />} />

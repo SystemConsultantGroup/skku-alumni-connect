@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Phone, Mail, FileText, Shield, Info, Code2, UserMinus } from "lucide-react";
+import { Phone, Mail, FileText, Shield, Info, Code2, UserMinus, Bell } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import WithdrawDialog from "@/components/WithdrawDialog";
 
@@ -10,6 +10,20 @@ const SettingsPage = () => {
   return (
     <div className="max-w-2xl mx-auto px-4 py-6 animate-fade-in">
       <h2 className="text-xl font-bold text-foreground mb-6">앱 설정</h2>
+
+      {/* 알림 */}
+      <section className="mb-8">
+        <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">알림</h3>
+        <button
+          onClick={() => navigate("/main/notification-settings")}
+          className="w-full flex items-center gap-4 p-4 rounded-xl bg-card border border-border hover:border-primary/30 hover:shadow-md transition-all text-left"
+        >
+          <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+            <Bell className="w-5 h-5 text-primary" />
+          </div>
+          <span className="text-sm font-semibold text-foreground">알림설정</span>
+        </button>
+      </section>
 
       {/* 문의하기 */}
       <section className="mb-8">
