@@ -209,7 +209,6 @@ function getRecentCommunityPosts() {
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const [isHorizontal, setIsHorizontal] = useState(true);
   const [idCardOpen, setIdCardOpen] = useState(false);
 
   const recentNotices = NEWS_ITEMS.filter((n) => n.type === "notice").slice(0, 3);
@@ -226,20 +225,40 @@ const HomePage = () => {
   return (
     <div className="max-w-2xl mx-auto px-4 py-6 space-y-8 animate-fade-in">
 
-      {/* Section 1: Digital ID Card (preview + modal) */}
+      {/* Section 1: Digital ID Card (horizontal default + fullscreen vertical modal) */}
       <section>
-        <button
-          type="button"
-          onClick={() => setIdCardOpen(true)}
-          className="w-full flex items-center gap-4 p-4 bg-card border border-border rounded-2xl shadow-sm hover:shadow-md hover:border-primary/40 active:scale-[0.99] transition-all cursor-pointer text-left"
-          aria-label="신분증 펼쳐 보기"
-        >
-          <div className="flex-1 min-w-0">
-            <p className="text-base font-bold text-foreground truncate">{mockUser.name}</p>
-            <p className="text-sm text-primary font-semibold truncate">{mockUser.position}</p>
+        <div className="w-full bg-card border border-border rounded-2xl shadow-sm overflow-hidden">
+          <div className="bg-primary px-5 py-3 flex items-center justify-between">
+            <img src={skkuLogo} alt="SKKU" className="h-6 brightness-0 invert object-contain" />
+            <div className="flex items-center gap-3">
+              <span className="text-primary-foreground text-xs font-medium">EXECUTIVE ID</span>
+              <button
+                type="button"
+                onClick={() => setIdCardOpen(true)}
+                aria-label="신분증 확대 보기"
+                className="text-primary-foreground/90 hover:text-primary-foreground transition-colors"
+              >
+                <Maximize2 className="w-4 h-4" />
+              </button>
+            </div>
           </div>
-          <Maximize2 className="w-5 h-5 text-muted-foreground shrink-0" />
-        </button>
+          <div className="p-5 flex gap-5">
+            <div className="w-20 h-24 rounded-lg bg-secondary flex items-center justify-center shrink-0">
+              <User className="w-8 h-8 text-primary" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-lg font-bold text-foreground">{mockUser.name}</p>
+              <p className="text-sm text-primary font-semibold mt-0.5">{mockUser.position}</p>
+              <p className="text-xs text-muted-foreground mt-1">{mockUser.dept} / {mockUser.year}학번</p>
+              <div className="mt-3 pt-3 border-t border-border">
+                <p className="text-[10px] text-muted-foreground leading-relaxed">
+                  (03081) 서울시 종로구 율곡로 171, 204호(원남동, 글로벌센터)
+                </p>
+                <p className="text-[10px] text-primary mt-0.5">alumni.skku.edu</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <Dialog open={idCardOpen} onOpenChange={setIdCardOpen}>
           <DialogContent
@@ -249,73 +268,29 @@ const HomePage = () => {
               <DialogTitle>디지털 신분증</DialogTitle>
             </DialogHeader>
 
-            <div className="flex justify-center gap-2 mt-4 sm:mt-2">
-              <button
-                onClick={() => setIsHorizontal(true)}
-                className={`px-4 py-1.5 text-xs rounded-lg font-medium transition-colors ${
-                  isHorizontal ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
-                }`}
-              >
-                가로형
-              </button>
-              <button
-                onClick={() => setIsHorizontal(false)}
-                className={`px-4 py-1.5 text-xs rounded-lg font-medium transition-colors ${
-                  !isHorizontal ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
-                }`}
-              >
-                세로형
-              </button>
-            </div>
-
             <div className="flex-1 flex items-center justify-center px-4 py-6 sm:px-0 sm:py-4">
-              {isHorizontal ? (
-                <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-lg overflow-hidden">
-                  <div className="bg-primary px-5 py-3 flex items-center justify-between">
-                    <img src={skkuLogo} alt="SKKU" className="h-6 brightness-0 invert object-contain" />
-                    <span className="text-primary-foreground text-xs font-medium">EXECUTIVE ID</span>
-                  </div>
-                  <div className="p-5 flex gap-5">
-                    <div className="w-20 h-24 rounded-lg bg-secondary flex items-center justify-center shrink-0">
-                      <User className="w-8 h-8 text-primary" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-lg font-bold text-foreground">{mockUser.name}</p>
-                      <p className="text-sm text-primary font-semibold mt-0.5">{mockUser.position}</p>
-                      <p className="text-xs text-muted-foreground mt-1">{mockUser.dept} / {mockUser.year}학번</p>
-                      <div className="mt-3 pt-3 border-t border-border">
-                        <p className="text-[10px] text-muted-foreground leading-relaxed">
-                          (03081) 서울시 종로구 율곡로 171, 204호(원남동, 글로벌센터)
-                        </p>
-                        <p className="text-[10px] text-primary mt-0.5">alumni.skku.edu</p>
-                      </div>
-                    </div>
-                  </div>
+              <div className="w-72 bg-card border border-border rounded-2xl shadow-lg overflow-hidden">
+                <div className="bg-primary px-5 py-4 text-center">
+                  <img src={skkuLogo} alt="SKKU" className="h-6 brightness-0 invert mx-auto object-contain" />
+                  <p className="text-primary-foreground text-[10px] mt-1.5 font-medium">
+                    SUNGKYUNKWAN UNIVERSITY ALUMNI ASSOCIATION
+                  </p>
                 </div>
-              ) : (
-                <div className="w-72 bg-card border border-border rounded-2xl shadow-lg overflow-hidden">
-                  <div className="bg-primary px-5 py-4 text-center">
-                    <img src={skkuLogo} alt="SKKU" className="h-6 brightness-0 invert mx-auto object-contain" />
-                    <p className="text-primary-foreground text-[10px] mt-1.5 font-medium">
-                      SUNGKYUNKWAN UNIVERSITY ALUMNI ASSOCIATION
+                <div className="p-6 text-center">
+                  <div className="w-24 h-28 rounded-xl bg-secondary flex items-center justify-center mx-auto mb-4">
+                    <User className="w-10 h-10 text-primary" />
+                  </div>
+                  <p className="text-xl font-bold text-foreground">{mockUser.name}</p>
+                  <p className="text-sm text-primary font-semibold mt-1">{mockUser.position}</p>
+                  <p className="text-xs text-muted-foreground mt-1">{mockUser.dept} / {mockUser.year}학번</p>
+                  <div className="mt-4 pt-4 border-t border-border text-left">
+                    <p className="text-[10px] text-muted-foreground leading-relaxed">
+                      (03081) 서울시 종로구 율곡로 171, 204호(원남동, 글로벌센터)
                     </p>
-                  </div>
-                  <div className="p-6 text-center">
-                    <div className="w-24 h-28 rounded-xl bg-secondary flex items-center justify-center mx-auto mb-4">
-                      <User className="w-10 h-10 text-primary" />
-                    </div>
-                    <p className="text-xl font-bold text-foreground">{mockUser.name}</p>
-                    <p className="text-sm text-primary font-semibold mt-1">{mockUser.position}</p>
-                    <p className="text-xs text-muted-foreground mt-1">{mockUser.dept} / {mockUser.year}학번</p>
-                    <div className="mt-4 pt-4 border-t border-border text-left">
-                      <p className="text-[10px] text-muted-foreground leading-relaxed">
-                        (03081) 서울시 종로구 율곡로 171, 204호(원남동, 글로벌센터)
-                      </p>
-                      <p className="text-[10px] text-primary mt-1">https://alumni.skku.edu</p>
-                    </div>
+                    <p className="text-[10px] text-primary mt-1">https://alumni.skku.edu</p>
                   </div>
                 </div>
-              )}
+              </div>
             </div>
           </DialogContent>
         </Dialog>
