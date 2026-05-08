@@ -29,7 +29,7 @@ const mockUser = {
 const benefits = [
   {
     icon: Heart,
-    title: "경조사에 조기/축하금 지원",
+    title: "강북삼성병원 건강검진/비급여진료비 할인",
     subtitle: "경조사 서비스",
     url: "https://alumni.skku.edu/alumni/Benefit/congrat.do",
     ready: true,
@@ -168,7 +168,7 @@ const aboutSections = [
           </table>
         </div>
         <p className="text-sm text-muted-foreground leading-relaxed">
-          <strong className="text-foreground">혜택:</strong> 경조사 지원, 무료주차, 건강검진 할인, 총동창회보 수령 등
+          <strong className="text-foreground">혜택:</strong> 강북삼성병원 할인, 무료주차, 건강검진 할인, 총동창회보 수령 등
         </p>
       </div>
     ),
