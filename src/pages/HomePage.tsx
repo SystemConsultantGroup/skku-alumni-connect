@@ -17,7 +17,7 @@ import {
 import { NEWS_ITEMS } from "@/data/news";
 import { CLUBS, RESEARCH_GROUPS } from "@/data/community";
 import { toast } from "sonner";
-import skkuLogo from "@/assets/skku-alumni-logo.png";
+import skkuLogo from "@/assets/logo-2.png";
 
 const mockUser = {
   name: "홍길동",

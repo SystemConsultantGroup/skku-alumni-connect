@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import skkuLogo from "@/assets/skku-alumni-logo.png";
+import skkuLogo from "@/assets/logo-1.png";
 
 const Landing = () => {
   const navigate = useNavigate();
