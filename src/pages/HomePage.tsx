@@ -30,7 +30,7 @@ const benefits = [
   {
     icon: Heart,
     title: "강북삼성병원 건강검진/비급여진료비 할인",
-    subtitle: "경조사 서비스",
+    subtitle: "의료 서비스",
     url: "https://alumni.skku.edu/alumni/Benefit/congrat.do",
     ready: true,
   },
