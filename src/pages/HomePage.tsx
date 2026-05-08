@@ -17,7 +17,7 @@ import {
 import { NEWS_ITEMS } from "@/data/news";
 import { CLUBS, RESEARCH_GROUPS } from "@/data/community";
 import { toast } from "sonner";
-import skkuLogo from "@/assets/logo-2.png";
+import skkuLogoLight from "@/assets/skku-alumni-logo-light.svg";
 
 const mockUser = {
   name: "홍길동",
@@ -229,7 +229,7 @@ const HomePage = () => {
       <section>
         <div className="w-full bg-card border border-border rounded-2xl shadow-sm overflow-hidden">
           <div className="bg-primary px-5 py-3 flex items-center justify-between">
-            <img src={skkuLogo} alt="SKKU" className="h-6 brightness-0 invert object-contain" />
+            <img src={skkuLogoLight} alt="SKKU" className="h-6 object-contain" />
             <div className="flex items-center gap-3">
               <span className="text-primary-foreground text-xs font-medium">EXECUTIVE ID</span>
               <button
@@ -271,7 +271,7 @@ const HomePage = () => {
             <div className="flex-1 flex items-center justify-center px-4 py-6 sm:px-0 sm:py-4">
               <div className="w-72 bg-card border border-border rounded-2xl shadow-lg overflow-hidden">
                 <div className="bg-primary px-5 py-4 text-center">
-                  <img src={skkuLogo} alt="SKKU" className="h-6 brightness-0 invert mx-auto object-contain" />
+                  <img src={skkuLogoLight} alt="SKKU" className="h-6 mx-auto object-contain" />
                   <p className="text-primary-foreground text-[10px] mt-1.5 font-medium">
                     SUNGKYUNKWAN UNIVERSITY ALUMNI ASSOCIATION
                   </p>

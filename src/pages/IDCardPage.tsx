@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { User } from "lucide-react";
-import skkuLogo from "@/assets/logo-2.png";
+import skkuLogo from "@/assets/skku-alumni-logo-light.svg";
 
 const mockData = {
   name: "홍길동",
@@ -20,17 +20,15 @@ const IDCardPage = () => {
       <div className="flex justify-center gap-2 mb-8">
         <button
           onClick={() => setIsHorizontal(true)}
-          className={`px-4 py-2 text-sm rounded-lg font-medium transition-colors ${
-            isHorizontal ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
-          }`}
+          className={`px-4 py-2 text-sm rounded-lg font-medium transition-colors ${isHorizontal ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
+            }`}
         >
           가로형
         </button>
         <button
           onClick={() => setIsHorizontal(false)}
-          className={`px-4 py-2 text-sm rounded-lg font-medium transition-colors ${
-            !isHorizontal ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
-          }`}
+          className={`px-4 py-2 text-sm rounded-lg font-medium transition-colors ${!isHorizontal ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
+            }`}
         >
           세로형
         </button>

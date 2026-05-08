@@ -7,7 +7,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import skkuLogo from "@/assets/logo-1.png";
+import skkuLogo from "@/assets/skku-alumni-logo.svg";
 
 const tabs = [
   { id: "home", label: "홈", icon: Home, path: "/main/home" },
@@ -44,11 +44,10 @@ const MainLayout = () => {
               <button
                 key={tab.id}
                 onClick={() => handleTabClick(tab)}
-                className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
-                  activeTab === tab.id
-                    ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                }`}
+                className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${activeTab === tab.id
+                  ? "bg-primary text-primary-foreground"
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  }`}
               >
                 {tab.label}
               </button>
@@ -100,11 +99,10 @@ const MainLayout = () => {
             <button
               key={tab.id}
               onClick={() => handleTabClick(tab)}
-              className={`flex-1 flex flex-col items-center gap-0.5 py-2 px-1 transition-colors ${
-                activeTab === tab.id
-                  ? "text-primary"
-                  : "text-muted-foreground"
-              }`}
+              className={`flex-1 flex flex-col items-center gap-0.5 py-2 px-1 transition-colors ${activeTab === tab.id
+                ? "text-primary"
+                : "text-muted-foreground"
+                }`}
             >
               <tab.icon className="w-5 h-5" />
               <span className="text-[10px] font-medium leading-tight text-center">
