@@ -212,10 +212,10 @@ const RegisterVerify = () => {
 
         {matchFailed && (
           <>
-            <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-4 flex gap-3">
-              <AlertTriangle className="w-5 h-5 text-destructive shrink-0 mt-0.5" />
+            <div className="rounded-lg border border-amber-300 bg-amber-50 p-4 flex gap-3">
+              <AlertTriangle className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
               <div className="text-sm">
-                <p className="font-semibold text-destructive mb-1">매칭 실패</p>
+                <p className="font-semibold text-amber-900 mb-1">임원정보 없음</p>
                 <p className="text-muted-foreground leading-relaxed">
                   입력하신 정보와 일치하는 임원 정보가 없습니다.
                   <br />신규 임원으로 신청하시려면 아래 정보를 추가 입력해주세요.
@@ -236,7 +236,7 @@ const RegisterVerify = () => {
             </div>
 
             <div>
-              <Label>희망 직급</Label>
+              <Label>임원직급</Label>
               <Select value={form.position} onValueChange={(v) => setForm({ ...form, position: v })}>
                 <SelectTrigger className="mt-1.5">
                   <SelectValue placeholder="직급을 선택하세요" />
