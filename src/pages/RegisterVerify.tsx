@@ -190,7 +190,20 @@ const RegisterVerify = () => {
           <Label>연락처</Label>
           <Input
             value={form.phone}
-            onChange={(e) => setForm({ ...form, phone: e.target.value })}
+            onChange={(e) => {
+              let value = e.target.value.replace(/[^0-9]/g, '');
+
+              if (value.length > 3 && value.length <= 7) {
+                value = value.replace(/^(\d{3})(\d+)/, '$1-$2');
+              } else if (value.length > 7) {
+                if (value.length > 11) {
+                  value = value.slice(0, 11);
+                }
+                value = value.replace(/^(\d{3})(\d{4})(\d+)/, '$1-$2-$3');
+              }
+
+              setForm({ ...form, phone: value });
+            }}
             placeholder="010-0000-0000"
             className="mt-1.5"
           />
