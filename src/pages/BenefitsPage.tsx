@@ -5,8 +5,8 @@ import { toast } from "sonner";
 const benefits = [
   {
     icon: Heart,
-    title: "강북삼성병원 건강검진/비급여진료비 할인",
-    subtitle: "의료 서비스",
+    title: "경조사/화환 신청",
+    subtitle: "경조사 서비스",
     url: "https://alumni.skku.edu/alumni/Benefit/congrat.do",
     ready: true,
   },
@@ -19,7 +19,7 @@ const benefits = [
   },
   {
     icon: Stethoscope,
-    title: "강북삼성병원 건강검진 할인",
+    title: "강북삼성병원 건강검진/비급여진료비 할인",
     subtitle: "의료 혜택",
     url: "https://alumni.skku.edu/alumni/Benefit/medical.do",
     ready: true,
