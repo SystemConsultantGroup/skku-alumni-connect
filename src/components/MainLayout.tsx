@@ -7,7 +7,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import skkuLogo from "@/assets/skku-alumni-logo.png";
+import skkuLogo from "@/assets/logo-1.png";
 
 const tabs = [
   { id: "home", label: "홈", icon: Home, path: "/main/home" },

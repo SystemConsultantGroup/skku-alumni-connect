@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { User } from "lucide-react";
-import skkuLogo from "@/assets/skku-alumni-logo.png";
+import skkuLogo from "@/assets/logo-2.png";
 
 const mockData = {
   name: "홍길동",
