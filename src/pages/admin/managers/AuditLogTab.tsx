@@ -11,13 +11,24 @@ export default function AuditLogTab() {
   const [searchTerm, setSearchTerm] = useState("");
   const [actionFilter, setActionFilter] = useState("all");
 
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+
   const filteredLogs = auditLogs.filter((log) => {
     const matchesSearch =
       log.actorName.includes(searchTerm) ||
       log.actorId.includes(searchTerm) ||
       log.targetResource.includes(searchTerm);
     const matchesAction = actionFilter === "all" || log.actionType.includes(actionFilter);
-    return matchesSearch && matchesAction;
+
+    let matchesDate = true;
+    if (startDate || endDate) {
+      const logDateStr = log.timestamp.split("T")[0];
+      if (startDate && logDateStr < startDate) matchesDate = false;
+      if (endDate && logDateStr > endDate) matchesDate = false;
+    }
+
+    return matchesSearch && matchesAction && matchesDate;
   });
 
   return (
@@ -48,10 +59,21 @@ export default function AuditLogTab() {
             </SelectContent>
           </Select>
 
-          {/* Note: Date Range Picker mocked with a simple input or just visually for now */}
-          <div className="hidden lg:flex items-center gap-2 text-sm text-muted-foreground border rounded-md px-3 py-2 bg-background">
-            <span>날짜:</span>
-            <span className="font-medium text-foreground">최근 7일</span>
+          <div className="hidden lg:flex items-center gap-2 text-sm text-muted-foreground border rounded-md px-2 py-1 bg-background">
+            <span className="whitespace-nowrap px-1">날짜:</span>
+            <Input
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+              className="h-8 w-[140px] px-2 py-1"
+            />
+            <span>~</span>
+            <Input
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+              className="h-8 w-[140px] px-2 py-1"
+            />
           </div>
         </div>
 
