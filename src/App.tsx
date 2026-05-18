@@ -38,6 +38,7 @@ import AdminPayments from "./pages/admin/AdminPayments";
 import AdminPosts from "./pages/admin/AdminPosts";
 import AdminCommunity from "./pages/admin/AdminCommunity";
 import AdminReports from "./pages/admin/AdminReports";
+import AdminManagers from "./pages/admin/AdminManagers";
 import BlockedUsersPage from "./pages/BlockedUsersPage";
 import OpenSourceLicensePage from "./pages/OpenSourceLicensePage";
 import NotFound from "./pages/NotFound";
@@ -90,6 +91,7 @@ const App = () => (
             <Route path="news" element={<AdminPosts />} />
             <Route path="community" element={<AdminCommunity />} />
             <Route path="reports" element={<AdminReports />} />
+            <Route path="managers" element={<AdminManagers />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -10,6 +10,7 @@ import {
   Flag,
   LogOut,
   RefreshCw,
+  Shield,
 } from "lucide-react";
 import { selectPendingReportCount, useReportStore } from "@/data/reports";
 import { selectPendingAsisCount, useAsisStore } from "@/data/asisSync";
@@ -24,6 +25,7 @@ const menuItems = [
   { label: "공지/뉴스 관리", icon: Newspaper, path: "/admin/news" },
   { label: "커뮤니티 관리", icon: MessageSquare, path: "/admin/community" },
   { label: "신고 관리", icon: Flag, path: "/admin/reports" },
+  { label: "매니저 관리", icon: Shield, path: "/admin/managers" },
 ];
 
 const AdminLayout = () => {
