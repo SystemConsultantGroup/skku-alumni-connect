@@ -82,8 +82,24 @@ let moderators: Moderator[] = [
 
 let auditLogs: AuditLogEntry[] = [
   {
-    id: "log_2",
+    id: "log_4",
     timestamp: "2026-05-18T11:10:00Z",
+    actorId: "president",
+    actorName: "안상인",
+    actionType: "관리자 추가",
+    targetResource: "staff2",
+  },
+  {
+    id: "log_3",
+    timestamp: "2026-05-18T11:05:00Z",
+    actorId: "scg",
+    actorName: "장재원",
+    actionType: "역할 추가",
+    targetResource: "ASIS 동기화 담당",
+  },
+  {
+    id: "log_2",
+    timestamp: "2026-05-17T11:10:00Z",
     actorId: "president",
     actorName: "안상인",
     actionType: "관리자 추가",
@@ -91,23 +107,7 @@ let auditLogs: AuditLogEntry[] = [
   },
   {
     id: "log_1",
-    timestamp: "2026-05-18T11:05:00Z",
-    actorId: "scg",
-    actorName: "장재원",
-    actionType: "역할 추가",
-    targetResource: "role_asis",
-  },
-  {
-    id: "log_2",
-    timestamp: "2026-05-18T11:10:00Z",
-    actorId: "president",
-    actorName: "안상인",
-    actionType: "관리자 추가",
-    targetResource: "staff1",
-  },
-  {
-    id: "log_2",
-    timestamp: "2026-05-18T11:10:00Z",
+    timestamp: "2026-05-16T11:10:00Z",
     actorId: "president",
     actorName: "안상인",
     actionType: "관리자 비활성화",
