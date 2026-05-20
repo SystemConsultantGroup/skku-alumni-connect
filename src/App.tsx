@@ -39,6 +39,9 @@ import AdminPosts from "./pages/admin/AdminPosts";
 import AdminCommunity from "./pages/admin/AdminCommunity";
 import AdminReports from "./pages/admin/AdminReports";
 import AdminManagers from "./pages/admin/AdminManagers";
+import ManagerListTab from "./pages/admin/managers/ManagerListTab";
+import RoleManagementTab from "./pages/admin/managers/RoleManagementTab";
+import AuditLogTab from "./pages/admin/managers/AuditLogTab";
 import BlockedUsersPage from "./pages/BlockedUsersPage";
 import OpenSourceLicensePage from "./pages/OpenSourceLicensePage";
 import NotFound from "./pages/NotFound";
@@ -91,7 +94,12 @@ const App = () => (
             <Route path="news" element={<AdminPosts />} />
             <Route path="community" element={<AdminCommunity />} />
             <Route path="reports" element={<AdminReports />} />
-            <Route path="managers" element={<AdminManagers />} />
+            <Route path="managers" element={<AdminManagers />}>
+              <Route index element={<Navigate to="/admin/managers/list" replace />} />
+              <Route path="list" element={<ManagerListTab />} />
+              <Route path="roles" element={<RoleManagementTab />} />
+              <Route path="audit" element={<AuditLogTab />} />
+            </Route>
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
