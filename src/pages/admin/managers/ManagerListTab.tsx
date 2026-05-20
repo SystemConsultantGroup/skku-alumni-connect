@@ -31,6 +31,9 @@ export default function ManagerListTab() {
   const [isEditRoleModalOpen, setIsEditRoleModalOpen] = useState(false);
   const [editRoleIds, setEditRoleIds] = useState<string[]>([]);
 
+  // Status Toggle Confirm State
+  const [statusTargetMod, setStatusTargetMod] = useState<Moderator | null>(null);
+
   const filteredModerators = moderators.filter(
     (mod) =>
       mod.name.includes(searchTerm) ||
