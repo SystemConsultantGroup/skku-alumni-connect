@@ -392,6 +392,37 @@ export default function ManagerListTab() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <AlertDialog open={!!statusTargetMod} onOpenChange={(open) => !open && setStatusTargetMod(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              {statusTargetMod?.name} 운영자의 계정을 {statusTargetMod?.status === "active" ? "비활성화" : "활성화"} 하시겠습니까?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {statusTargetMod?.status === "active"
+                ? "비활성화된 운영자는 관리자 페이지에 로그인할 수 없습니다."
+                : "활성화하면 해당 운영자가 다시 관리자 페이지에 로그인할 수 있습니다."}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>취소</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                if (!statusTargetMod) return;
+                const toStatusName = statusTargetMod.status === "active" ? "비활성화" : "활성화";
+                managersStore.updateModerator(statusTargetMod.id, {
+                  status: statusTargetMod.status === "active" ? "inactive" : "active",
+                });
+                toast.success(`${statusTargetMod.name} 운영자의 계정이 ${toStatusName} 되었습니다.`);
+                setStatusTargetMod(null);
+              }}
+            >
+              확인
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
