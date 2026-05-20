@@ -282,14 +282,7 @@ export default function ManagerListTab() {
                             비밀번호 초기화
                           </DropdownMenuItem>
                           <DropdownMenuItem
-                            onClick={() => {
-                              const toStatusName = mod.status === "active" ? "비활성화" : "활성화"
-                              if (!confirm(`${mod.name} 운영자의 계정을 ${toStatusName} 하시겠습니까?`)) return;
-                              managersStore.updateModerator(mod.id, {
-                                status: mod.status === "active" ? "inactive" : "active"
-                              })
-                              toast.success(`${mod.name} 운영자의 계정이 ${toStatusName} 되었습니다.`);
-                            }}
+                            onClick={() => setStatusTargetMod(mod)}
                           >
                             {mod.status === "active" ? "비활성화" : "활성화"}
                           </DropdownMenuItem>
