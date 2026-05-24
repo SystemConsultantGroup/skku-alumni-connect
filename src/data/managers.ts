@@ -39,7 +39,7 @@ let roles: Role[] = [
   {
     id: "role_admin",
     name: "일반 관리자",
-    description: "매니저 관리를 포함한 대부분의 권한을 가집니다.",
+    description: "운영자 관리를 포함한 대부분의 권한을 가집니다.",
     scopes: ["page:*", "action:write_users", "action:manage_admins"],
   },
   {

@@ -77,7 +77,7 @@ export default function AuditLogTab() {
           </div>
         </div>
 
-        <Button variant="outline">
+        <Button variant="outline" onClick={() => alert("추후 구현 예정입니다.")}>
           <Download className="w-4 h-4 mr-2" />
           CSV 다운로드
         </Button>

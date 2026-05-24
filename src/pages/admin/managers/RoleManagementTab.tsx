@@ -13,7 +13,7 @@ import { toast } from "sonner";
 const ACTION_PERMISSIONS = [
   { id: "action:read_users", label: "회원 정보 조회" },
   { id: "action:write_users", label: "회원 정보 수정" },
-  { id: "action:manage_admins", label: "매니저 관리" },
+  { id: "action:manage_admins", label: "운영자 관리" },
 ];
 
 const PAGE_PERMISSIONS = [

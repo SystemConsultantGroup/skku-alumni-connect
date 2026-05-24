@@ -45,7 +45,7 @@ const menuItems: MenuItem[] = [
   { label: "커뮤니티 관리", icon: MessageSquare, path: "/admin/community" },
   { label: "신고 관리", icon: Flag, path: "/admin/reports" },
   {
-    label: "매니저 관리",
+    label: "운영자 관리",
     icon: Shield,
     path: "/admin/managers",
     children: [
