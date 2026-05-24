@@ -13,8 +13,17 @@ import {
   RefreshCw,
   Shield,
   ChevronDown,
+  ChevronUp,
+  User,
   type LucideIcon,
 } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { selectPendingReportCount, useReportStore } from "@/data/reports";
 import { selectPendingAsisCount, useAsisStore } from "@/data/asisSync";
 
@@ -121,11 +130,10 @@ const AdminLayout = () => {
               <div key={item.path}>
                 <button
                   onClick={() => handleParentClick(item)}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-colors ${
-                    parentActive
+                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-colors ${parentActive
                       ? "bg-primary text-primary-foreground font-medium"
                       : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                  }`}
+                    }`}
                   aria-expanded={hasChildren ? isOpen : undefined}
                 >
                   <item.icon className="w-4 h-4 shrink-0" />
@@ -150,11 +158,10 @@ const AdminLayout = () => {
                         <button
                           key={child.path}
                           onClick={() => navigate(child.path)}
-                          className={`w-full text-left px-3 py-1.5 rounded-lg text-sm transition-colors ${
-                            active
+                          className={`w-full text-left px-3 py-1.5 rounded-lg text-sm transition-colors ${active
                               ? "bg-primary/10 text-primary font-medium"
                               : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                          }`}
+                            }`}
                         >
                           {child.label}
                         </button>
@@ -168,13 +175,28 @@ const AdminLayout = () => {
         </nav>
 
         <div className="p-2 border-t border-border">
-          <button
-            onClick={() => navigate("/admin/login")}
-            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
-          >
-            <LogOut className="w-4 h-4" />
-            로그아웃
-          </button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-muted-foreground hover:bg-muted transition-colors text-left">
+                <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                  <User className="w-3.5 h-3.5 text-primary" />
+                </div>
+                <span className="flex-1 font-medium">관리자</span>
+                <ChevronUp className="w-4 h-4 shrink-0" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56" side="top">
+              <DropdownMenuItem onClick={() => navigate("/admin/profile")}>
+                <User className="w-4 h-4 mr-2" />
+                내정보 수정
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => navigate("/admin/login")} className="text-destructive focus:text-destructive">
+                <LogOut className="w-4 h-4 mr-2" />
+                로그아웃
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </aside>
 

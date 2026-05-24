@@ -32,7 +32,6 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminMembers from "./pages/admin/AdminMembers";
 import AdminAsisSync from "./pages/admin/AdminAsisSync";
 import AdminUpload from "./pages/admin/AdminUpload";
-import AdminPlaceholder from "./pages/admin/AdminPlaceholder";
 import AdminApplications from "./pages/admin/AdminApplications";
 import AdminPayments from "./pages/admin/AdminPayments";
 import AdminPosts from "./pages/admin/AdminPosts";
@@ -42,6 +41,7 @@ import AdminManagers from "./pages/admin/AdminManagers";
 import ManagerListTab from "./pages/admin/managers/ManagerListTab";
 import RoleManagementTab from "./pages/admin/managers/RoleManagementTab";
 import AuditLogTab from "./pages/admin/managers/AuditLogTab";
+import AdminProfilePage from "./pages/admin/AdminProfilePage";
 import BlockedUsersPage from "./pages/BlockedUsersPage";
 import OpenSourceLicensePage from "./pages/OpenSourceLicensePage";
 import NotFound from "./pages/NotFound";
@@ -100,6 +100,7 @@ const App = () => (
               <Route path="roles" element={<RoleManagementTab />} />
               <Route path="audit" element={<AuditLogTab />} />
             </Route>
+            <Route path="profile" element={<AdminProfilePage />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
