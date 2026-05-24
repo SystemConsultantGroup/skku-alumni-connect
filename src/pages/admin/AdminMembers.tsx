@@ -24,7 +24,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Search, Download, ChevronLeft, ChevronRight } from "lucide-react";
+import { Search, Download, ChevronLeft, ChevronRight, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { allMembers, type AdminMember } from "@/data/adminMembers";
 import {
@@ -33,6 +33,7 @@ import {
   useAsisStore,
   type AsisStatus,
 } from "@/data/asisSync";
+import { useNavigate } from "react-router-dom";
 
 const PAGE_SIZE = 10;
 
@@ -47,8 +48,8 @@ const AdminMembers = () => {
   const [editGeneration, setEditGeneration] = useState("");
   const [editPayment, setEditPayment] = useState("");
   const [editAsis, setEditAsis] = useState<AsisStatus>("synced");
-
   const asisRecords = useAsisStore(selectAsisStore);
+  const navigate = useNavigate();
 
   const filtered = allMembers.filter((m) => {
     if (search && !m.name.includes(search) && !m.department.includes(search) && !String(m.year).includes(search)) return false;
@@ -83,10 +84,16 @@ const AdminMembers = () => {
     <div className="space-y-4 max-w-6xl">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-foreground">회원 관리</h1>
-        <Button variant="outline" onClick={() => toast.success("엑셀 파일이 다운로드됩니다 (mock)")}>
-          <Download className="w-4 h-4 mr-1" />
-          엑셀 다운로드
-        </Button>
+        <div className="flex gap-2">
+          <Button onClick={() => navigate("/admin/members/upload")}>
+            <Upload className="w-4 h-4 mr-1" />
+            엑셀 일괄 업로드
+          </Button>
+          <Button variant="outline" onClick={() => toast.success("엑셀 파일이 다운로드됩니다 (mock)")}>
+            <Download className="w-4 h-4 mr-1" />
+            엑셀 다운로드
+          </Button>
+        </div>
       </div>
 
       {/* Search + Filters */}
@@ -107,7 +114,7 @@ const AdminMembers = () => {
           <SelectTrigger className="w-[140px]"><SelectValue placeholder="직급" /></SelectTrigger>
           <SelectContent>
             <SelectItem value="all">전체 직급</SelectItem>
-            {["회장","부회장","감사","자문위원","상임이사","이사","고문"].map((p) => (
+            {["회장", "부회장", "감사", "자문위원", "상임이사", "이사", "고문"].map((p) => (
               <SelectItem key={p} value={p}>{p}</SelectItem>
             ))}
           </SelectContent>
@@ -161,8 +168,8 @@ const AdminMembers = () => {
                     <TableCell>
                       <Badge variant="outline" className={
                         m.accountStatus === "활성" ? "text-green-600 border-green-300" :
-                        m.accountStatus === "비활성" ? "text-red-600 border-red-300" :
-                        "text-muted-foreground"
+                          m.accountStatus === "비활성" ? "text-red-600 border-red-300" :
+                            "text-muted-foreground"
                       }>
                         {m.accountStatus}
                       </Badge>
@@ -217,7 +224,7 @@ const AdminMembers = () => {
                   <Select value={editPosition} onValueChange={setEditPosition}>
                     <SelectTrigger><SelectValue /></SelectTrigger>
                     <SelectContent>
-                      {["회장","부회장","감사","자문위원","상임이사","이사","고문"].map((p) => (
+                      {["회장", "부회장", "감사", "자문위원", "상임이사", "이사", "고문"].map((p) => (
                         <SelectItem key={p} value={p}>{p}</SelectItem>
                       ))}
                     </SelectContent>

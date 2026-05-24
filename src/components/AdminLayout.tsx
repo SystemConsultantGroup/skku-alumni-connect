@@ -3,7 +3,6 @@ import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import {
   LayoutDashboard,
   Users,
-  Upload,
   FileText,
   CreditCard,
   Newspaper,
@@ -40,7 +39,6 @@ const menuItems: MenuItem[] = [
   { label: "대시보드", icon: LayoutDashboard, path: "/admin" },
   { label: "회원 관리", icon: Users, path: "/admin/members" },
   { label: "ASIS 최신화 관리", icon: RefreshCw, path: "/admin/asis-sync" },
-  { label: "엑셀 업로드", icon: Upload, path: "/admin/upload" },
   { label: "신규 신청 관리", icon: FileText, path: "/admin/applications" },
   { label: "기여금 관리", icon: CreditCard, path: "/admin/payments" },
   { label: "공지/뉴스 관리", icon: Newspaper, path: "/admin/news" },
@@ -131,8 +129,8 @@ const AdminLayout = () => {
                 <button
                   onClick={() => handleParentClick(item)}
                   className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-colors ${parentActive
-                      ? "bg-primary text-primary-foreground font-medium"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                    ? "bg-primary text-primary-foreground font-medium"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
                     }`}
                   aria-expanded={hasChildren ? isOpen : undefined}
                 >
@@ -159,8 +157,8 @@ const AdminLayout = () => {
                           key={child.path}
                           onClick={() => navigate(child.path)}
                           className={`w-full text-left px-3 py-1.5 rounded-lg text-sm transition-colors ${active
-                              ? "bg-primary/10 text-primary font-medium"
-                              : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                            ? "bg-primary/10 text-primary font-medium"
+                            : "text-muted-foreground hover:text-foreground hover:bg-muted"
                             }`}
                         >
                           {child.label}

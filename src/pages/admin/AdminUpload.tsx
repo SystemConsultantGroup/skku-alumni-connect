@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ChevronLeft } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -16,6 +18,7 @@ interface UploadResult {
 }
 
 const AdminUpload = () => {
+  const navigate = useNavigate();
   const [isDragging, setIsDragging] = useState(false);
   const [uploadResult, setUploadResult] = useState<UploadResult | null>(null);
 
@@ -48,12 +51,17 @@ const AdminUpload = () => {
 
   return (
     <div className="space-y-6 max-w-4xl">
-      <h1 className="text-2xl font-bold text-foreground">엑셀 업로드</h1>
+      <div className="flex items-center gap-2">
+        <Button variant="ghost" size="icon" onClick={() => navigate("/admin/members")}>
+          <ChevronLeft className="w-5 h-5" />
+        </Button>
+        <h1 className="text-2xl font-bold text-foreground">회원 일괄 생성</h1>
+      </div>
 
       {/* Upload guide */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">업로드 양식 안내</CardTitle>
+          <CardTitle className="text-base">엑셀 파일 업로드 양식 안내</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="text-sm space-y-1">
@@ -78,12 +86,11 @@ const AdminUpload = () => {
         onDragLeave={() => setIsDragging(false)}
         onDrop={handleDrop}
         onClick={simulateUpload}
-        className={`border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition-colors ${
-          isDragging ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"
-        }`}
+        className={`border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition-colors ${isDragging ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"
+          }`}
       >
         <Upload className="w-12 h-12 mx-auto mb-3 text-muted-foreground" />
-        <p className="text-foreground font-medium">파일을 드래그하거나 클릭하여 업로드</p>
+        <p className="text-foreground font-medium">엑셀 파일을 드래그하거나 클릭하여 업로드</p>
         <p className="text-sm text-muted-foreground mt-1">.xlsx, .xls, .csv 파일 지원</p>
       </div>
 
@@ -184,13 +191,14 @@ const AdminUpload = () => {
             </CardContent>
           </Card>
 
-          {/* Actions */}
-          <div className="flex gap-3 justify-end">
-            <Button variant="outline" onClick={() => setUploadResult(null)}>취소</Button>
-            <Button onClick={() => { toast.success("145건이 등록되었습니다 (mock)"); setUploadResult(null); }}>확인 및 등록</Button>
-          </div>
         </div>
       )}
+
+      {/* Actions */}
+      <div className="flex gap-3 justify-end">
+        <Button variant="outline" onClick={() => setUploadResult(null)}>취소</Button>
+        <Button disabled={!uploadResult} onClick={() => { toast.success("145건이 등록되었습니다 (mock)"); setUploadResult(null); }}>확인 및 등록</Button>
+      </div>
     </div>
   );
 };
