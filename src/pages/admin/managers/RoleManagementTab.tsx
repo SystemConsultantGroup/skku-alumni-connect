@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Users, Plus, ShieldCheck, Trash2, Edit } from "lucide-react";
+import { Users, Plus, ShieldCheck, Trash2, Edit, Search } from "lucide-react";
 import { toast } from "sonner";
 
 const ACTION_PERMISSIONS = [
@@ -34,6 +34,11 @@ export default function RoleManagementTab() {
   const [newRole, setNewRole] = useState({ name: "", description: "" });
   const [selectedScopes, setSelectedScopes] = useState<string[]>([]);
   const [assignToMods, setAssignToMods] = useState<string[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredRoles = roles.filter((role) => {
+    return role.name.includes(searchTerm) || role.description.includes(searchTerm);
+  });
 
   // Edit Role Modal State
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -123,7 +128,16 @@ export default function RoleManagementTab() {
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-end">
+      <div className="flex justify-between items-center">
+        <div className="relative w-64">
+          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="역할 이름, 설명 검색..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-9"
+          />
+        </div>
         <Dialog open={isAddModalOpen} onOpenChange={setIsAddModalOpen}>
           <DialogTrigger asChild>
             <Button>
@@ -230,45 +244,52 @@ export default function RoleManagementTab() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {roles.map((role) => {
-              const count = getAssignedCount(role.id);
-              const isOwner = role.id === "role_owner" || role.id === "role_admin";
-              return (
-                <TableRow key={role.id}>
-                  <TableCell className="font-medium">{role.name}</TableCell>
-                  <TableCell className="text-muted-foreground">{role.description}</TableCell>
-                  <TableCell className="text-center">
-                    <Button variant="outline" size="sm" onClick={() => openAssignViewModal(role)}>
-                      <Users className="w-3.5 h-3.5 mr-1.5" />
-                      {count}명 부여
-                    </Button>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex justify-end gap-2">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        disabled={isOwner}
-                        className={!isOwner ? "text-primary hover:text-primary hover:bg-primary/10" : ""}
-                        onClick={() => openEditModal(role)}
-                      >
-                        <Edit className="w-3.5 h-3.5 mr-1.5" />
-                        수정
+            {filteredRoles.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={4} className="text-center h-24 text-muted-foreground">
+                  검색 결과가 없습니다.
+                </TableCell>
+              </TableRow>
+            ) : (
+              filteredRoles.map((role) => {
+                const count = getAssignedCount(role.id);
+                const isOwner = role.id === "role_owner" || role.id === "role_admin";
+                return (
+                  <TableRow key={role.id}>
+                    <TableCell className="font-medium">{role.name}</TableCell>
+                    <TableCell className="text-muted-foreground">{role.description}</TableCell>
+                    <TableCell className="text-center">
+                      <Button variant="outline" size="sm" onClick={() => openAssignViewModal(role)}>
+                        <Users className="w-3.5 h-3.5 mr-1.5" />
+                        {count}명 부여
                       </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        disabled={isOwner}
-                        className={!isOwner ? "text-destructive hover:text-destructive hover:bg-destructive/10" : ""}
-                        onClick={() => handleDelete(role.id, isOwner)}
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <div className="flex justify-end gap-2">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          disabled={isOwner}
+                          className={!isOwner ? "text-primary hover:text-primary hover:bg-primary/10" : ""}
+                          onClick={() => openEditModal(role)}
+                        >
+                          <Edit className="w-3.5 h-3.5 mr-1.5" />
+                          수정
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          disabled={isOwner}
+                          className={!isOwner ? "text-destructive hover:text-destructive hover:bg-destructive/10" : ""}
+                          onClick={() => handleDelete(role.id, isOwner)}
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                );
+              }))}
           </TableBody>
         </Table>
       </div>
