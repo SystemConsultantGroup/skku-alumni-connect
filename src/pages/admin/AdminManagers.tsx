@@ -5,22 +5,22 @@ const PAGE_META: Record<string, { title: string; description: string }> = {
   "/admin/managers/list": {
     title: "운영자 목록",
     description:
-      "관리자 페이지에 접근할 수 있는 운영자 계정을 등록하고, 정보·역할·로그인 상태를 관리합니다.",
+      "운영자를 추가, 조회하고 수정할 수 있습니다.",
   },
   "/admin/managers/roles": {
     title: "역할 관리",
     description:
-      "운영자에게 부여할 역할을 만들고, 기능 권한과 페이지 접근 권한을 세분화하여 설정합니다.",
+      "역할을 정의하고 다른 운영자에게 부여할 수 있습니다.",
   },
   "/admin/managers/audit": {
     title: "감사 로그",
     description:
-      "운영자가 수행한 주요 작업 이력을 조회하고, 기간·작업 유형별로 필터링하여 감사 추적에 활용합니다.",
+      "모든 운영자의 작업 내역을 확인할 수 있습니다.",
   },
 };
 
 const DEFAULT_META = {
-  title: "매니저 관리",
+  title: "운영자 관리",
   description: "관리자 계정과 세부 권한을 관리합니다.",
 };
 
