@@ -231,9 +231,15 @@ export default function ManagerListTab() {
                     <TableCell className="font-medium">{mod.id}</TableCell>
                     <TableCell>
                       {mod.status === "active" ? (
-                        <CheckCircle2 className="w-5 h-5 text-green-500" />
+                        <div className="flex items-center gap-1.5 text-green-600">
+                          <CheckCircle2 className="w-4 h-4" />
+                          <span className="text-sm">활성</span>
+                        </div>
                       ) : (
-                        <Circle className="w-5 h-5 text-muted-foreground" />
+                        <div className="flex items-center gap-1.5 text-muted-foreground">
+                          <Circle className="w-4 h-4" />
+                          <span className="text-sm">비활성</span>
+                        </div>
                       )}
                     </TableCell>
                     <TableCell>
