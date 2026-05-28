@@ -29,7 +29,7 @@ const mockUser = {
 const benefits = [
   {
     icon: Heart,
-    title: "경조사/화환 신청",
+    title: "경조기/화환 신청",
     subtitle: "경조사 서비스",
     url: "https://alumni.skku.edu/alumni/Benefit/congrat.do",
     ready: true,
